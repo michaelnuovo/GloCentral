@@ -11,10 +11,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cas.michael.glocentral.BleDevices.AdapterInterface;
 import cas.michael.glocentral.BleDevices.ScannedDevice;
 import cas.michael.glocentral.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
+        implements AdapterInterface {
 
     private static final String TAG = RecyclerViewAdapter.class.getSimpleName();
 
@@ -44,6 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mScannedDevices = myDataset;
     }
 
+    @Override
     public void resetList(List<ScannedDevice> dataset){
         mScannedDevices = dataset;
         notifyDataSetChanged();

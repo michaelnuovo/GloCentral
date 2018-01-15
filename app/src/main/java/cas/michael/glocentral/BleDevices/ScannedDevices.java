@@ -2,9 +2,11 @@ package cas.michael.glocentral.BleDevices;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +18,13 @@ import java.util.Set;
 public class ScannedDevices {
 
     private static final String TAG = "ScannedDevices";
+
+    /**
+     * Array list of adapters to be refreshed on mScannedDevices data change. Any adapter
+     * passed to this ArrayList should implement AdapterInterface.
+     *
+     */
+    ArrayList<RecyclerView.Adapter> adapter = new ArrayList<>();
 
     /* Singleton */
     private static ScannedDevices singleton;
@@ -88,5 +97,12 @@ public class ScannedDevices {
         void updateAdapter();
 
         // Other
+    }
+
+    /**
+     * Adds adapters to the global adapter array for refreshing every time ...
+     */
+    public void addAdapterToRefreshList(){
+
     }
 }
