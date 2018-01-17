@@ -6,6 +6,7 @@ import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -16,10 +17,10 @@ import cas.michael.glocentral.BleDevices.ScannedDevices;
 public class LeScannerCallback extends ScanCallback {
 
     private static final String TAG = LeScannerCallback.class.getSimpleName();
-    Set<ScannedDevice> mScannedDevices;
+    ArrayList<ScannedDevice> mScannedDevices;
     Context mCtx;
 
-    public LeScannerCallback(Context ctx, Set<ScannedDevice> scannedDevices){
+    public LeScannerCallback(Context ctx, ArrayList<ScannedDevice> scannedDevices){
         mCtx = ctx;
         mScannedDevices = scannedDevices;
     }
@@ -54,6 +55,6 @@ public class LeScannerCallback extends ScanCallback {
      * @param errorCode
      */
     public void onScanFailed(int errorCode){
-        Log.i(TAG,"onScanFailed(); error code = "+String.valueOf(errorCode));
+        Log.d(TAG,"onScanFailed(); error code = "+String.valueOf(errorCode));
     }
 }

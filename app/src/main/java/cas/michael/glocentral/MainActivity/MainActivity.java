@@ -13,8 +13,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +24,7 @@ import cas.michael.glocentral.R;
 import cas.michael.glocentral.LeScanner.LeScannerCallback;
 
 public class MainActivity extends AppCompatActivity
-        implements ScannedDevices.ScannedDevicesInterface {
+         {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -32,14 +32,21 @@ public class MainActivity extends AppCompatActivity
     private static final int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 0;
 
     /* Collection of scanned devices */
-    private Set<ScannedDevice> mScannedDevices = new HashSet<>();
+    private ArrayList<ScannedDevice> mScannedDevices = new ArrayList<>();
 
     /* UI */
     @BindView(R.id.main_activity_recycler_view) RecyclerView mRecyclerView;
-    RecyclerViewAdapter mAdapter;
+    MainAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.v(TAG,"onCreate()");
+        Log.i(TAG,"onCreate()");
+        Log.d(TAG,"onCreate()");
+        Log.e(TAG,"onCreate()");
+        Log.wtf(TAG,"onCreate()");
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -58,24 +65,19 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(lm);
 
         // specify an adapter (see also next example)
-        mAdapter = new RecyclerViewAdapter(ScannedDevices.getInstanceOf(this).getList());
+        mAdapter = new MainAdapter(ScannedDevices.getInstanceOf(this).getList());
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    /**
-     * After new device is added to scanned devices list, scanned devices recycler view needs
-     * to have it's data reset.
-     */
-    public void updateAdapter(){
-        Log.d(TAG,"updateAdapter()");
-        mAdapter.resetList(ScannedDevices.getInstanceOf(this).getList());
-    }
-
     private void startLeScan(){
+
+        Log.d(TAG,"startLeScan()");
+
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
         BluetoothLeScanner bluetoothScanner = bluetoothAdapter.getBluetoothLeScanner();
         bluetoothScanner.startScan(new LeScannerCallback(this,mScannedDevices));
+        ScannedDevices.getInstanceOf(this).addAdapter(mAdapter);
     }
 
     private void askFineLocationPermission(){
@@ -137,7 +139,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void onAccessFineLocationPermissionGranted(){
-
         Log.i(TAG,"onAccessFineLocationPermissionGranted()");
     }
 }

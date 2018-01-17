@@ -7,20 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cas.michael.glocentral.BleDevices.AdapterInterface;
 import cas.michael.glocentral.BleDevices.ScannedDevice;
 import cas.michael.glocentral.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
-        implements AdapterInterface {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>
+        implements ScannedDeviceAdapterInterface {
 
-    private static final String TAG = RecyclerViewAdapter.class.getSimpleName();
+    private static final String TAG = MainAdapter.class.getSimpleName();
 
-    private List<ScannedDevice> mScannedDevices;
+    private ArrayList<ScannedDevice> mScannedDevices;
+
+    @Override
+    public void resetData(ArrayList<ScannedDevice> mData){
+        mScannedDevices = mData;
+        notifyDataSetChanged();
+    }
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -42,20 +47,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerViewAdapter(List<ScannedDevice> myDataset) {
+    public MainAdapter(ArrayList<ScannedDevice> myDataset) {
         mScannedDevices = myDataset;
-    }
-
-    @Override
-    public void resetList(List<ScannedDevice> dataset){
-        mScannedDevices = dataset;
-        notifyDataSetChanged();
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public MainAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                     int viewType) {
         // create a new view
         View v  = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.main_activity_recycler_view_list_item, parent, false);

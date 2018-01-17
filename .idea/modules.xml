@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GloCentral.iml" filepath="$PROJECT_DIR$/GloCentral.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LeConnect.iml" filepath="$PROJECT_DIR$/LeConnect.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

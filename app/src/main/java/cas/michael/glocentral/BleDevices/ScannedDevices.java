@@ -2,15 +2,10 @@ package cas.michael.glocentral.BleDevices;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import cas.michael.glocentral.MainActivity.ScannedDeviceAdapterInterface;
 
 /**
  * Wrapper singleton class for scanned LE devices.
@@ -19,70 +14,49 @@ public class ScannedDevices {
 
     private static final String TAG = "ScannedDevices";
 
-    /**
-     * Array list of adapters to be refreshed on mScannedDevices data change. Any adapter
-     * passed to this ArrayList should implement AdapterInterface.
-     *
-     */
-    ArrayList<RecyclerView.Adapter> adapter = new ArrayList<>();
-
-    /* Singleton */
+    ArrayList<ScannedDeviceAdapterInterface> mAdapters = new ArrayList<>();
     private static ScannedDevices singleton;
-
     private Context mCtx;
+    private ArrayList<ScannedDevice> mScannedDevices = new ArrayList<>();
 
-    /* Collection of scanned devices */
-    private Set<ScannedDevice> mScannedDevices = new HashSet<>();
-
-    /**
-     * Private constructor
-     */
     private ScannedDevices(Context ctx){
         mCtx = ctx;
     }
 
-    /**
-     * Singleton getter method
-     * @return
-     */
     public static ScannedDevices getInstanceOf(Context ctx){
         if(singleton != null) return singleton;
         singleton = new ScannedDevices(ctx);
         return singleton;
     }
 
-    /**
-     * Adds device wrapper to scanned devices list if not already in list
-     * @param device
-     */
     public void addDevice(BluetoothDevice device, int rssi){
+        Log.i(TAG,"addDevice()");
+
 
         //Log.d(TAG,"addDevice()");
 
         // If device is in list, just return, otherwise add a new device
         if(isDeviceInList(device)) return;
 
-        Log.d(TAG,"added device : "
+        Log.i(TAG,"added device : "
                 + String.valueOf(device.getName() + "("+device.getAddress()+")"));
 
         // Add new device
         ScannedDevice newDevice = new ScannedDevice(device, rssi);
         mScannedDevices.add(newDevice);
+
+        notifyAdapters();
     }
 
-    /**
-     * Returns a list of ScannedDevices type
-     */
-    public List<ScannedDevice> getList(){
-        List list = new ArrayList<ScannedDevice>();
-        for(ScannedDevice device : mScannedDevices) list.add(device);
-        return list;
+    public void removeDevice(){
+
+        notifyAdapters();
     }
 
-    /**
-     * Check if device is currently in scanned device list
-     * @return
-     */
+    public ArrayList<ScannedDevice> getList(){
+        return mScannedDevices;
+    }
+
     private boolean isDeviceInList(BluetoothDevice device){
         String address = device.getAddress();
         for(ScannedDevice scannedDevice : mScannedDevices){
@@ -91,18 +65,17 @@ public class ScannedDevices {
         return false;
     }
 
-    public interface ScannedDevicesInterface {
+    // begin adapter handling
 
-        // Main activity
-        void updateAdapter();
-
-        // Other
+    public void addAdapter(ScannedDeviceAdapterInterface adapter){
+        mAdapters.add(adapter);
     }
 
-    /**
-     * Adds adapters to the global adapter array for refreshing every time ...
-     */
-    public void addAdapterToRefreshList(){
-
+    private void notifyAdapters(){
+        for(ScannedDeviceAdapterInterface adapter : mAdapters){
+            adapter.resetData(mScannedDevices);
+        }
     }
+
+    // end adapter handling
 }
