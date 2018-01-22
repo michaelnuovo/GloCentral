@@ -6,23 +6,20 @@ import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import cas.michael.glocentral.BleDevices.Constants;
-import cas.michael.glocentral.BleDevices.ScannedDevice;
 import cas.michael.glocentral.BleDevices.ScannedDevices;
+import cas.michael.glocentral.Constants;
 
 public class LeScannerCallback extends ScanCallback {
 
     private static final String TAG = LeScannerCallback.class.getSimpleName();
-    ArrayList<ScannedDevice> mScannedDevices;
     Context mCtx;
 
-    public LeScannerCallback(Context ctx, ArrayList<ScannedDevice> scannedDevices){
-        mCtx = ctx;
-        mScannedDevices = scannedDevices;
+
+    public LeScannerCallback(Context ctx){
+        Context mCtx = ctx;
+        //mScannedDevices = scannedDevices;
     }
 
     /**
@@ -36,10 +33,13 @@ public class LeScannerCallback extends ScanCallback {
 
         BluetoothDevice device = result.getDevice();
         String deviceName = device.getName();
-        boolean isInFilter = Constants.FILTERED_NAMES.contains(deviceName);
+        boolean isInFilter = true; //Constants.DEVICE_FILTER.contains(deviceName);
 
         // Check if this device name is filtered or not
-        if(isInFilter) ScannedDevices.getInstanceOf(mCtx).addDevice(device,result.getRssi());
+        if(isInFilter) {
+            Log.i(TAG,"onScanResult()");
+            ScannedDevices.getInstanceOf(mCtx).addDevice(device,result.getRssi());
+        }
     }
 
     /**
@@ -55,6 +55,7 @@ public class LeScannerCallback extends ScanCallback {
      * @param errorCode
      */
     public void onScanFailed(int errorCode){
-        Log.d(TAG,"onScanFailed(); error code = "+String.valueOf(errorCode));
+
+        Log.i(TAG,"onScanFailed(); error code = "+String.valueOf(errorCode));
     }
 }

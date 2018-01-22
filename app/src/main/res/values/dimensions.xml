@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="text_size_medium">25sp</dimen>
+
+    <dimen name="text_size_small_a">5sp</dimen>
+    <dimen name="text_size_small_b">10sp</dimen>
+    <dimen name="text_size_medium_a">15sp</dimen>
+    <dimen name="text_size_medium_b">20sp</dimen>
+    <dimen name="text_size_large_a">25sp</dimen>
+    <dimen name="text_size_large_b">25sp</dimen>
+
     <dimen name="list_item_vertical_padding">16dp</dimen>
     <dimen name="list_item_horizontal_padding">16dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

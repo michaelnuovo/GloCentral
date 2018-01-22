@@ -13,21 +13,25 @@
     <color name="default_toolbar">#262728</color>
     <color name="default_background">#333333</color>
 
-    <color name="panelSelectorToggleStateOff">#ff8800</color>
-    <color name="panelSelectorToggleStateOn">#00ff00</color>
-
     <drawable name="default_background">#333333</drawable>
     <drawable name="default_textcolor">#B8B8B8</drawable>
     <drawable name="default_infotextcolor">#7c7c7c</drawable>
 
-    <color name="gold">#FFD700</color>
+
     <color name="charcoalBackground">#272727</color>
     <color name="charcoalPrimaryLight">#343643</color>
     <color name="charcoalPrimary">#424453</color>
     <color name="charcoalPrimaryDark">#25252f</color>
 
-    <color name="mediumPurple">#9370DB</color>
+
+
+    <!-- cusotm colors -->
+
+    <color name="gold">#FFD700</color>
+    <color name="orange">#ff8800</color>
+    <color name="purple">#9370DB</color>
     <color name="pink">#FFC0CB</color>
+    <color name="green">#00ff00</color>
 
 
 </resources>

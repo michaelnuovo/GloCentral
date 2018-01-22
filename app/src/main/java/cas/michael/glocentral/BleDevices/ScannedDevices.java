@@ -5,7 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import java.util.ArrayList;
 
-import cas.michael.glocentral.MainActivity.ScannedDeviceAdapterInterface;
+import cas.michael.glocentral.MainActivity.LeDeviceAdapter;
 
 /**
  * Wrapper singleton class for scanned LE devices.
@@ -14,14 +14,12 @@ public class ScannedDevices {
 
     private static final String TAG = "ScannedDevices";
 
-    ArrayList<ScannedDeviceAdapterInterface> mAdapters = new ArrayList<>();
+    ArrayList<LeDeviceAdapter> mAdapters = new ArrayList<>();
     private static ScannedDevices singleton;
-    private Context mCtx;
     private ArrayList<ScannedDevice> mScannedDevices = new ArrayList<>();
+    private Context mCtx;
 
-    private ScannedDevices(Context ctx){
-        mCtx = ctx;
-    }
+    private ScannedDevices(Context ctx){mCtx = ctx;}
 
     public static ScannedDevices getInstanceOf(Context ctx){
         if(singleton != null) return singleton;
@@ -30,10 +28,6 @@ public class ScannedDevices {
     }
 
     public void addDevice(BluetoothDevice device, int rssi){
-        Log.i(TAG,"addDevice()");
-
-
-        //Log.d(TAG,"addDevice()");
 
         // If device is in list, just return, otherwise add a new device
         if(isDeviceInList(device)) return;
@@ -42,15 +36,21 @@ public class ScannedDevices {
                 + String.valueOf(device.getName() + "("+device.getAddress()+")"));
 
         // Add new device
-        ScannedDevice newDevice = new ScannedDevice(device, rssi);
+        ScannedDevice newDevice = new ScannedDevice(device, rssi, mCtx);
         mScannedDevices.add(newDevice);
 
         notifyAdapters();
     }
 
-    public void removeDevice(){
+    public void clear(){
+        mScannedDevices.clear();
+    }
 
-        notifyAdapters();
+    public ScannedDevice getDeviceByAddress(String address){
+        for(ScannedDevice device : mScannedDevices){
+            if(device.mAddress.equals(address)) return device;
+        }
+        return null;
     }
 
     public ArrayList<ScannedDevice> getList(){
@@ -65,14 +65,20 @@ public class ScannedDevices {
         return false;
     }
 
+    public void disconnectAll(){
+        for(ScannedDevice device : mScannedDevices){
+            device.disconnect();
+        }
+    }
+
     // begin adapter handling
 
-    public void addAdapter(ScannedDeviceAdapterInterface adapter){
+    public void addAdapter(LeDeviceAdapter adapter){
         mAdapters.add(adapter);
     }
 
     private void notifyAdapters(){
-        for(ScannedDeviceAdapterInterface adapter : mAdapters){
+        for(LeDeviceAdapter adapter : mAdapters){
             adapter.resetData(mScannedDevices);
         }
     }

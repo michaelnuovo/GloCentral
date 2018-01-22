@@ -2,30 +2,104 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/charcoalPrimaryLight"
-    >
+    android:layout_marginBottom="1dp"
+    android:background="@color/charcoalPrimaryLight">
 
     <TextView
         android:id="@+id/tv_device_name"
+        android:text="Device Name"
+        android:textSize="@dimen/text_size_medium_b"
+
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_medium"
-        android:text="TEST"
-        android:paddingVertical="@dimen/list_item_vertical_padding"
-        android:paddingHorizontal="@dimen/list_item_horizontal_padding"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/tv_mac_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_mac_address"
+        android:text="mac address"
+        android:textSize="@dimen/text_size_medium_a"
+        android:textColor="@color/purple"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_device_name"
+
+        />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+
+        fancy:fb_text="CONNECT"
+
+        android:id="@+id/btn_connect"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+
+        android:padding="10dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        fancy:fb_defaultColor="@color/charcoalPrimary"
+        fancy:fb_focusColor="#313131"
+        fancy:fb_iconPaddingLeft="0dp"
+        fancy:fb_iconPaddingRight="0dp"
+
+
+        fancy:fb_radius="64dp"></mehdi.sakout.fancybuttons.FancyButton>
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_device_name"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="37dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:paddingHorizontal="@dimen/list_item_horizontal_padding"-->
+    <!--android:paddingVertical="@dimen/list_item_vertical_padding"-->
+    <!--android:text="Device Name"-->
+    <!--android:textSize="@dimen/text_size_medium_1x"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/tv_mac_address"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_mac_address"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:text="address"-->
+    <!--android:textSize="@dimen/text_size_small_2x"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="@+id/tv_device_name"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/tv_device_name" />-->
 
     <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="@android:color/white"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--tools:layout_editor_absoluteX="16dp" />-->
-
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="@android:color/white"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--tools:layout_editor_absoluteX="16dp" />-->
 
 
 </android.support.constraint.ConstraintLayout>
